@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from werkzeug.security import generate_password_hash
 from flask_mysqldb import MySQL
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required
@@ -15,6 +16,10 @@ app = Flask(__name__)
 csrf = CSRFProtect()
 db = MySQL(app)
 login_manager_app = LoginManager(app)
+
+admin = {"Administrar":"/admin"}
+usuario = {"":""}
+
 
 @login_manager_app.user_loader
 def load_user(id):
@@ -52,26 +57,56 @@ def logout():
 def protected():
     return "<h1>Vista protegida</h1>"
 
-@app.route("/home")
-def home():
-    return render_template("home.html")
-
-@app.route("/registro")
+@app.route("/registro", methods=['POST', 'GET'])
 def registro():
-    return render_template('/registro.html')
-
-@app.route("/addregistro" , methods=['POST'])
-def addregistro():
     if request.method == 'POST':
+
+        usuario = request.form['username']
         nombre = request.form['nombre']
         email = request.form['email']
-        telefono = request.form['telefono']
-        usuario = request.form['usuario']
-        contrasena = request.form['contrasena']
-        cur = mysql.connection.cursor()
-        cur.execute('INSERT INTO usuarios (nombre, email, telefono, usuario, contraseña, tipo) VALUES (%s,%s,%s,%s,%s,"cliente")',(nombre,email,telefono,usuario,contrasena))
-        mysql.connection.commit()
-        return "Recibido" 
+        user = User(0,request.form['username'],request.form['password'],request.form['nombre'],request.form['email'])
+        check = ModelUser.checkuser(db,user)
+        if check:
+            check = ModelUser.checkemail(db,user)
+            if check:
+                cur = db.connection.cursor()
+                contrasena = generate_password_hash(request.form['password'])
+                cur.execute('INSERT INTO usuarios (username,password,nombre, email, tipo) VALUES (%s,%s,%s,%s,"cliente")',(usuario,contrasena,nombre,email))
+                db.connection.commit()
+                return redirect(url_for('login'))
+            else:
+                flash("Email in Use...")
+                return render_template('auth/registro.html')
+        else:
+            flash("Username in Use...")
+            return render_template('auth/registro.html')
+    else:
+        return render_template('auth/registro.html')
+
+@app.route("/passwordrecovery", methods=['POST', 'GET'])
+def passwordrecovery():
+    if request.method == 'POST':
+        newpassword = request.form['newpassword']
+        confirmpassword = request.form['confirmpassword']
+        user = User(0,None,None,None,request.form['email'])
+        check = ModelUser.checkuser(db,user)
+    
+        if check:
+            check=ModelUser.checknewpasswords(newpassword,confirmpassword)
+            if check:
+                cur = db.connection.cursor()
+                newpassword = generate_password_hash(request.form['newpassword'])
+                cur.execute('UPDATE usuarios SET password = %s WHERE email = %s',(newpassword,request.form['email']))
+                db.connection.commit()
+                return redirect(url_for('login'))
+        return render_template('auth/passwordrecovery.html')
+    else:
+        return render_template('auth/passwordrecovery.html')
+
+@app.route("/home")
+@login_required
+def home():
+    return render_template("home.html")
 
 def status_401(error):
     return redirect(url_for('login'))

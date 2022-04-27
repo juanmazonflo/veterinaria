@@ -1,12 +1,12 @@
 {% extends './index.html' %}
-{% block title %} Login {% endblock %}
+{% block title %} Registro {% endblock %}
 
 {% block CustomCSS %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
 {% endblock %}
 
 {% block body %}
-<form class="form-signin" action="/login" method="POST">
+<form class="form-register" action="/registro" method="POST">
     <img class="mb-4" src="{{ url_for('static', filename='img/vetlogo.png') }}" alt="" width="100" height="90">
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -21,7 +21,7 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 fw-normal">Register</h1>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div class="form-floating">
       <input type="text" class="form-control" id="floatingInput" name="username" placeholder="Username">
@@ -31,9 +31,16 @@
       <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
       <label for="floatingPassword">Password</label>
     </div>
+    <div class="form-floating">
+        <input type="text" class="form-control" id="floatingInput" name="nombre" placeholder="Full Name">
+        <label for="floatingInput">Full Name</label>
+    </div>
+    <div class="form-floating">
+        <input type="email" class="form-control" id="floatingInput" name="email" placeholder="E-Mail">
+        <label for="floatingInput">E-Mail</label>
+    </div>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    No tienes cuenta? <a href="{{ url_for('registro') }}">Registrate aquí</a> <br>
-    Olvidaste tu contraseña? <a href="{{ url_for('passwordrecovery') }}">Click Aquí</a>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+    Ya tienes cuenta? <a href="{{ url_for('login') }}">Ingresa aquí</a>
   </form>
 {% endblock %}
