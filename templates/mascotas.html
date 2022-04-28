@@ -1,0 +1,159 @@
+{% extends './index.html' %}
+
+{% block title %} Mascotas {% endblock %}
+
+{% block CustomCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<style>
+    body {
+        color: #404E67;
+        background: #F5F7FA;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    
+    .table-wrapper {
+        width: 1200px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 20px;	
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+    .table-title {
+        padding-bottom: 10px;
+        margin: 0 0 10px;
+    }
+    .table-title h2 {
+        margin: 6px 0 0;
+        font-size: 22px;
+    }
+    .table-title .add-new {
+        float: right;
+        height: 30px;
+        font-weight: bold;
+        font-size: 12px;
+        text-shadow: none;
+        min-width: 100px;
+        border-radius: 50px;
+        line-height: 13px;
+    }
+    .table-title .add-new i {
+        margin-right: 4px;
+    }
+    table.table {
+        table-layout: fixed;
+    }
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+    }
+    table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+    table.table th:last-child {
+        width: 100px;
+    }
+    table.table td a {
+        cursor: pointer;
+        display: inline-block;
+        margin: 0 5px;
+        min-width: 24px;
+    }    
+    table.table td a.add {
+        color: #27C46B;
+    }
+    table.table td a.edit {
+        color: #FFC107;
+    }
+    table.table td a.delete {
+        color: #E34724;
+    }
+    table.table td i {
+        font-size: 19px;
+    }
+    table.table td a.add i {
+        font-size: 24px;
+        margin-right: -1px;
+        position: relative;
+        top: 3px;
+    }    
+    table.table .form-control {
+        height: 32px;
+        line-height: 32px;
+        box-shadow: none;
+        border-radius: 2px;
+    }
+    table.table .form-control.error {
+        border-color: #f50000;
+    }
+    table.table td .add {
+        display: none;
+    }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='img/vetlogo.png') }}" alt="" width="40" height="35"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            {% for llave,valor in usermenu.items() %}  
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ valor }}">{{ llave }} </a>
+                </li>
+            {% endfor %}
+        </ul>
+          <a class="btn btn-secondary" href="{{ url_for('logout') }}">Logout</a>
+      </div>
+    </div>
+</nav>
+
+<div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-11"><h2>Mascotas <b>Registradas</b></h2></div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Nombre de Usuario</th>
+                        <th>Tipo Mascota (Especie)</th>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in listamascotas %}
+                    <tr id="{{ u.id }}">
+                        <td>{{ u.idmascota }}</td>
+                        <td>{{ u.idusuario }}</td>
+                        <td>{{ u.tipo }}</td>
+                        <td>{{ u.nombre }}</td>
+                        <td>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/editing.png') }}" alt="" width="20" height="20"></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/delete.png') }}" alt="" width="20" height="20"></a>
+                        </td>
+                    </tr>
+                    {% endfor %}      
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>     
+
+{% endblock %}

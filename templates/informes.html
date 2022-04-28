@@ -1,6 +1,6 @@
 {% extends './index.html' %}
 
-{% block title %} Home {% endblock %}
+{% block title %} Informes {% endblock %}
 
 {% block CustomCSS %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
@@ -28,6 +28,6 @@
     </div>
 </nav>
 
-<h1>Bienvenido {{ current_user.nombre }}</h1>
+<h1>Ventana de Informes</h1>
 
 {% endblock %}
