@@ -130,6 +130,7 @@ def usuarios():
     usuarios = []
     usuarios = ModelUser.extraerlistausuarios(db)
     return render_template("usuarios.html",usermenu = menus,listausuarios = usuarios)
+    
 
 @app.route("/servicios")
 @login_required
