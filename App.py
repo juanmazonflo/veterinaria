@@ -34,6 +34,7 @@ def load_user(id):
 def index():
     return redirect(url_for('login'))
 
+#Login
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
@@ -62,6 +63,7 @@ def logout():
 def protected():
     return "<h1>Vista protegida</h1>"
 
+#Registrar usuario
 @app.route("/registro", methods=['POST', 'GET'])
 def registro():
     if request.method == 'POST':
@@ -88,6 +90,7 @@ def registro():
     else:
         return render_template('auth/registro.html')
 
+#Recuperar contraseña
 @app.route("/passwordrecovery", methods=['POST', 'GET'])
 def passwordrecovery():
     if request.method == 'POST':
@@ -117,6 +120,7 @@ def home():
     menus = ModelUser.extraermenu(current_user.tipo)
     return render_template("home.html",usermenu = menus)
 
+#Apartado de citas
 @app.route("/citas")
 @app.route("/citas/<accion>",methods=['POST', 'GET'])
 @app.route("/citas/<accion>/<id>",methods=['POST', 'GET'])
@@ -178,6 +182,7 @@ def citas(accion='',id=''):
             flash('Cita eliminada satisfactoriamente')
             return redirect("/citas")
 
+#Apartado Mascota
 @app.route("/mascotas")
 @app.route("/mascotas/<accion>",methods=['POST', 'GET'])
 @app.route("/mascotas/<accion>/<id>",methods=['POST', 'GET'])
@@ -218,6 +223,7 @@ def mascotas(accion='',id=''):
             flash('Mascota eliminada satisfactoriamente')
             return redirect("/mascotas")
 
+#Apartado Usuario
 @app.route("/usuarios")
 @app.route("/usuarios/<accion>",methods=['POST', 'GET'])
 @app.route("/usuarios/<accion>/<id>",methods=['POST', 'GET'])
@@ -262,6 +268,7 @@ def usuarios(accion='',id=''):
             return redirect("/usuarios")
     
 
+#Apartado servicios
 @app.route("/servicios")
 @app.route("/servicios/<accion>",methods=['POST', 'GET'])
 @app.route("/servicios/<accion>/<id>",methods=['POST', 'GET'])
@@ -300,6 +307,7 @@ def servicios(accion='',id=''):
             flash('Servicio eliminado satisfactoriamente')
             return redirect("/servicios")
 
+#Apartado Medicinas
 @app.route("/medicinas")
 @app.route("/medicinas/<accion>",methods=['POST', 'GET'])
 @app.route("/medicinas/<accion>/<id>",methods=['POST', 'GET'])
@@ -342,6 +350,7 @@ def medicinas(accion='',id=''):
             flash('Medicina eliminada satisfactoriamente')
             return redirect("/medicinas")
 
+#Apartado Recetas
 @app.route("/recetas")
 @app.route("/recetas/<accion>",methods=['POST', 'GET'])
 @app.route("/recetas/<accion>/<id>",methods=['POST', 'GET'])
@@ -383,23 +392,27 @@ def recetas(accion='',id=''):
             flash('Receta eliminada satisfactoriamente')
             return redirect("/recetas")
 
-@app.route("/atencion")
+#Apartado Atención
+@app.route("/atención")
 @login_required
 def atencion():
     menus = ModelUser.extraermenu(current_user.tipo)
     return render_template("atencion.html",usermenu = menus)
 
+#Apartado Informes
 @app.route("/informes")
 @login_required
 def informes():
     menus = ModelUser.extraermenu(current_user.tipo)
     return render_template("informes.html",usermenu = menus)
 
+#Errores
 def status_401(error):
     return redirect(url_for('login'))
 
 def status_404(error):
     return "<h1>La página solicitada no existe</h1>"
+
 
 if __name__ == "__main__":
     app.config.from_object(config['development'])
