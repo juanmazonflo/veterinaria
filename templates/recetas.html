@@ -1,6 +1,6 @@
 {% extends './index.html' %}
 
-{% block title %} Usuarios {% endblock %}
+{% block title %} Historial {% endblock %}
 
 {% block CustomCSS %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
@@ -91,10 +91,6 @@
         display: none;
     }
 
-    table.table tr .password{
-        font-size: 3px;
-    }
-
     </style>
 {% endblock %}
 
@@ -121,47 +117,43 @@
 </nav>
 
 <div class="container-lg">
-    <div class="table-responsive">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-11"><h2>Usuarios <b>Registrados</b></h2></div>
-                    <div class="col-sm-1">
-                        <a type="button" href="/usuarios/agregar" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
-                    </div>
-                </div>
-            </div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Nombre de Usuario</th>
-                        <th>Contraseña</th>
-                        <th>Nombre</th>
-                        <th>E-Mail</th>
-                        <th>Tipo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for u in listausuarios %}
-                    <tr id="{{ u.id }}">
-                        <td>{{ u.id }}</td>
-                        <td>{{ u.username }}</td>
-                        <td class="password">{{ u.password }}</td>
-                        <td>{{ u.nombre }}</td>
-                        <td>{{ u.email }}</td>
-                        <td>{{ u.tipo }}</td>
-                        <td>
-                            <a class="edit" href="/usuarios/modificar/{{ u.id }}" title="Edit" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/editing.png') }}" alt="" width="20" height="20"></a>
-                            <a class="delete" href="/usuarios/eliminar/{{ u.id }}" title="Delete" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/delete.png') }}" alt="" width="20" height="20"></a>
-                        </td>
-                    </tr>
-                    {% endfor %}      
-                </tbody>
-            </table>
-        </div>
-    </div>
+  <div class="table-responsive">
+      <div class="table-wrapper">
+          <div class="table-title">
+              <div class="row">
+                  <div class="col-sm-11"><h2>Medicinas <b>Registradas</b></h2></div>
+                  <div class="col-sm-1">
+                      <a type="button" href="/recetas/agregar" class="btn btn-info add-new"><i  class="fa fa-plus"></i> Add New</a>
+                  </div>
+              </div>
+          </div>
+          <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th>id</th>
+                      <th>Mascota</th>
+                      <th>Fecha</th>
+                      <th>Descripcion</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for u in listarecetas %}
+                  <tr id="{{ u.id }}">
+                      <td>{{ u.idreceta }}</td>
+                      <td>{{ u.mascota }}</td>
+                      <td>{{ u.fecha }}</td>
+                      <td>{{ u.descripcion }}</td>
+                      <td>
+                          <a class="edit" href="/recetas/modificar/{{ u.idreceta }}" title="Edit" name="editar" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/editing.png') }}" alt="" width="20" height="20"></a>
+                          <a class="delete" href="/recetas/eliminar/{{ u.idreceta }}" title="Delete" name="eliminar" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/delete.png') }}" alt="" width="20" height="20"></a>
+                      </td>
+                  </tr>
+                  {% endfor %}      
+              </tbody>
+          </table>
+      </div>
+  </div>
 </div>     
+
 
 {% endblock %}

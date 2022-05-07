@@ -1,6 +1,6 @@
 {% extends './index.html' %}
 
-{% block title %} Usuarios {% endblock %}
+{% block title %} Mascotas {% endblock %}
 
 {% block CustomCSS %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
@@ -91,10 +91,6 @@
         display: none;
     }
 
-    table.table tr .password{
-        font-size: 3px;
-    }
-
     </style>
 {% endblock %}
 
@@ -120,48 +116,34 @@
     </div>
 </nav>
 
-<div class="container-lg">
-    <div class="table-responsive">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-11"><h2>Usuarios <b>Registrados</b></h2></div>
-                    <div class="col-sm-1">
-                        <a type="button" href="/usuarios/agregar" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
-                    </div>
-                </div>
-            </div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Nombre de Usuario</th>
-                        <th>Contraseña</th>
-                        <th>Nombre</th>
-                        <th>E-Mail</th>
-                        <th>Tipo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for u in listausuarios %}
-                    <tr id="{{ u.id }}">
-                        <td>{{ u.id }}</td>
-                        <td>{{ u.username }}</td>
-                        <td class="password">{{ u.password }}</td>
-                        <td>{{ u.nombre }}</td>
-                        <td>{{ u.email }}</td>
-                        <td>{{ u.tipo }}</td>
-                        <td>
-                            <a class="edit" href="/usuarios/modificar/{{ u.id }}" title="Edit" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/editing.png') }}" alt="" width="20" height="20"></a>
-                            <a class="delete" href="/usuarios/eliminar/{{ u.id }}" title="Delete" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/delete.png') }}" alt="" width="20" height="20"></a>
-                        </td>
-                    </tr>
-                    {% endfor %}      
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>     
 
-{% endblock %}
+<form class="form-register" action="/servicios/agregar" method="POST">
+    <img class="mb-4" src="{{ url_for('static', filename='img/vetlogo.png') }}" alt="" width="100" height="90">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <br>
+    {% for message in messages %}
+    <div class="alert alert-primary alert-dismissable" role="alert">
+        <strong>
+            {{ message }}
+        </strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <h1 class="h3 mb-3 fw-normal">Servicios</h1>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingInput" name="servicio" placeholder="servicio">
+      <label for="floatingPassword">Servicio</label>
+    </div>
+    <div class="form-floating">
+        <input type="text" class="form-control" id="floatingInput" name="precio" placeholder="precio">
+        <label for="floatingInput">Precio</label>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Agregar</button>
+  </form>
+
+  {% endblock %}

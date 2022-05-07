@@ -123,7 +123,7 @@
                 <div class="row">
                     <div class="col-sm-11"><h2>Servicios <b>Registrados</b></h2></div>
                     <div class="col-sm-1">
-                        <button href="{{ url_for('logout') }}" type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                        <a type="button" href="/servicios/agregar"  class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
                     </div>
                 </div>
             </div>
@@ -143,8 +143,8 @@
                         <td>{{ u.servicio }}</td>
                         <td>$ {{ u.precio }}</td>
                         <td>
-                            <a href="/" class="edit" title="Edit" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/editing.png') }}" alt="" width="20" height="20"></a>
-                            <a href="/" class="delete" title="Delete" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/delete.png') }}" alt="" width="20" height="20"></a>
+                            <a  class="edit" href="/servicios/modificar/{{ u.idservicio }}" title="Edit" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/editing.png') }}" alt="" width="20" height="20"></a>
+                            <a  class="delete" href="/servicios/eliminar/{{ u.idservicio }}" title="Delete" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/delete.png') }}" alt="" width="20" height="20"></a>
                         </td>
                     </tr>
                     {% endfor %}      
