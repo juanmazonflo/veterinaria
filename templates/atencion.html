@@ -1,6 +1,6 @@
 {% extends './index.html' %}
 
-{% block title %} Mascotas {% endblock %}
+{% block title %} Atencion {% endblock %}
 
 {% block CustomCSS %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
@@ -122,9 +122,9 @@
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-11"><h2>Mascotas <b>Registradas</b></h2></div>
+                    <div class="col-sm-11"><h2>Atenciones <b>Registradas</b></h2></div>
                     <div class="col-sm-1">
-                        <a type="button" href="/mascotas/agregar" class="btn btn-info add-new"><i  class="fa fa-plus"></i> Add New</a>
+                        <a type="button" href="/atencion/agregar" class="btn btn-info add-new"><i  class="fa fa-plus"></i> Add New</a>
                     </div>
                 </div>
             </div>
@@ -132,22 +132,25 @@
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Dueño</th>
-                        <th>Tipo Mascota (Especie)</th>
-                        <th>Nombre</th>
-                        <th>Acciones</th>
+                        <th>idcita</th>
+                        <th>idreceta</th>
+                        <th>Atendido</th>
+                        <th>Descripcion</th>
+                        <th>Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for u in listamascotas %}
+                    {% for u in listaatencion %}
                     <tr id="{{ u.id }}">
-                        <td>{{ u.idmascota }}</td>
-                        <td>{{ u.idusuario }}</td>
-                        <td>{{ u.tipo }}</td>
-                        <td>{{ u.nombre }}</td>
+                        <td>{{ u.idatencion}}</td>
+                        <td>{{ u.idcita}}</td>
+                        <td>{{ u.idreceta }}</td>
+                        <td>{{ u.atendido }}</td>
+                        <td>{{ u.descripcion }}</td>
+                        <td>{{ u.subtotal }}</td>
                         <td>
-                            <a class="edit" href="/mascotas/modificar/{{ u.idmascota }}" title="Edit" name="editar" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/editing.png') }}" alt="" width="20" height="20"></a>
-                            <a class="delete" href="/mascotas/eliminar/{{ u.idmascota }}" title="Delete" name="eliminar" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/delete.png') }}" alt="" width="20" height="20"></a>
+                            <a class="edit" href="/atencion/modificar/{{ u.idatencion }}" title="Edit" name="editar" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/editing.png') }}" alt="" width="20" height="20"></a>
+                            <a class="delete" href="/atencion/eliminar/{{ u.idatencion }}" title="Delete" name="eliminar" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/delete.png') }}" alt="" width="20" height="20"></a>
                         </td>
                     </tr>
                     {% endfor %}      

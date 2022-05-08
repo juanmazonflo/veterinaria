@@ -135,16 +135,24 @@
     <h1 class="h3 mb-3 fw-normal">Recetas</h1>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInput" name="idmascota" placeholder="idmascota">
-      <label for="floatingInput">Idmascota</label>
+        <p style="font-family:verdana">
+            Escoge mascota<SELECT class="form-control" name="mascota" style="font-family:verdana">
+            {% for j in mascotas %}
+                <OPTION  value={{j[0]}}>{{j[0]}}</OPTION>
+            {% endfor %}
+            </SELECT>
+        </p>
+    </div>
+    Escoge medicinas
+    <div class="form-floating">
+        
+        {% for j in medicinas %}
+        <input type="checkbox" name="descripcion" value="{{j[0]}}">{{j[0]}}<br>
+        {% endfor %}
     </div>
     <div class="form-floating">
         <input type="date" class="form-control" id="floatingInput" name="fecha" placeholder="fecha">
         <label for="floatingPassword">Fecha</label>
-    </div>
-    <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInput" name="descripcion" placeholder="descripcion">
-      <label for="floatingPassword">descripcion</label>
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Agregar</button>
   </form>

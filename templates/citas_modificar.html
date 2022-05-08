@@ -136,18 +136,18 @@
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div class="form-floating">
         <p style="font-family:verdana">
-            Escoge mascota:<SELECT class="form-control" name="mascota" value="{{cita.1}}"style="font-family:verdana">
-            {% for j in mascota %}
-                <OPTION  value="{{cita.1}}">{{j[0]}} {{j[1]}}</OPTION>
+            Escoge mascota:<SELECT class="form-control" name="mascota" value="{{cita.1}}" style="font-family:verdana">
+            {% for j in mascotas %}
+                <OPTION  value={{j[0]}}>{{j[0]}}</OPTION>
             {% endfor %}
             </SELECT>
         </p>
     </div>
     <div class="form-floating">
         <p style="font-family:verdana">
-            Escoge servicio<SELECT class="form-control" name="servicio" value={{cita.2}} style="font-family:verdana">
-            {% for j in servicio %}
-                <OPTION  value={{j[0]}}>{{j[0]}} {{j[1]}}</OPTION>
+            Escoge servicio<SELECT class="form-control" name="servicio" value="{{cita.2}}" style="font-family:verdana">
+            {% for j in servicios %}
+                <OPTION  value={{j[0]}}>{{j[0]}}</OPTION>
             {% endfor %}
             </SELECT>
         </p>

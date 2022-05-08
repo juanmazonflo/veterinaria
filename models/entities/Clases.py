@@ -12,7 +12,7 @@ class Servicio():
         self.servicio = servicio
         self.precio = precio
 
-class Citas():
+class Cita():
     def __init__(self, idcita, idmascota, idservicio,fecha,hora) -> None:
         self.idcita=idcita
         self.idmascota =idmascota
@@ -28,9 +28,19 @@ class Medicinas():
         self.presentacion=presentacion
         self.precio =precio
 
-class Recetas():
+class Receta():
     def __init__(self, idreceta, idmascota,fecha,descripcion) -> None:
         self.idreceta=idreceta
         self.idmascota =idmascota
         self.fecha=fecha
         self.descripcion=descripcion
+
+class Atencion():
+    def __init__(self,idatencion,idcita,idreceta,atendido,descripcion,subtotal)-> None:
+        self.idcita=idatencion
+        self.idcita=idcita
+        self.idreceta=idreceta
+        self.atendido=atendido
+        self.descripcion=descripcion
+        self.subtotal=subtotal
+ 

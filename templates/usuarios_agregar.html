@@ -1,6 +1,6 @@
 {% extends './index.html' %}
 
-{% block title %} Mascotas {% endblock %}
+{% block title %} Usuarios {% endblock %}
 
 {% block CustomCSS %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
@@ -117,44 +117,57 @@
 </nav>
 
 
-<div class="container-lg">
-    <div class="table-responsive">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-11"><h2>Mascotas <b>Registradas</b></h2></div>
-                    <div class="col-sm-1">
-                        <a type="button" href="/mascotas/agregar" class="btn btn-info add-new"><i  class="fa fa-plus"></i> Add New</a>
-                    </div>
-                </div>
-            </div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Dueño</th>
-                        <th>Tipo Mascota (Especie)</th>
-                        <th>Nombre</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for u in listamascotas %}
-                    <tr id="{{ u.id }}">
-                        <td>{{ u.idmascota }}</td>
-                        <td>{{ u.idusuario }}</td>
-                        <td>{{ u.tipo }}</td>
-                        <td>{{ u.nombre }}</td>
-                        <td>
-                            <a class="edit" href="/mascotas/modificar/{{ u.idmascota }}" title="Edit" name="editar" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/editing.png') }}" alt="" width="20" height="20"></a>
-                            <a class="delete" href="/mascotas/eliminar/{{ u.idmascota }}" title="Delete" name="eliminar" data-toggle="tooltip"><img src="{{ url_for('static', filename='img/delete.png') }}" alt="" width="20" height="20"></a>
-                        </td>
-                    </tr>
-                    {% endfor %}      
-                </tbody>
-            </table>
-        </div>
+<form class="form-register" action="/usuarios/agregar" method="POST">
+    <img class="mb-4" src="{{ url_for('static', filename='img/vetlogo.png') }}" alt="" width="100" height="90">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <br>
+    {% for message in messages %}
+    <div class="alert alert-primary alert-dismissable" role="alert">
+        <strong>
+            {{ message }}
+        </strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-</div>     
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    username,
+	password,
+	nombre,
+	email,
+	tipo,
+    <h1 class="h3 mb-3 fw-normal">Usuarios</h1>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingInput" name="username" placeholder="username">
+      <label for="floatingInput">username</label>
+    </div>
+    <div class="form-floating">
+        <input type="password" class="form-control" id="floatingPassword" name="newpassword" placeholder="New Password">
+        <label for="floatingPassword">New Password</label>
+    </div>
+    <div class="form-floating">
+          <input type="password" class="form-control" id="floatingPassword" name="confirmpassword" placeholder="Confirm Password">
+          <label for="floatingPassword">Confirm New Password</label>
+    </div>
+    <div class="form-floating">
+        <input type="text" class="form-control" id="floatingInput" name="nombre" placeholder="nombre">
+        <label for="floatingInput">nombre</label>
+    </div>
+    <div class="form-floating">
+        <input type="text" class="form-control" id="floatingInput" name="email" placeholder="email">
+        <label for="floatingInput">email</label>
+    </div>
+    <div class="form-floating">
+        <select id="floatinInput" class="form-control" name="tipo">
+            <option value="admin">admin</option>
+            <option value="usuario">usuario</option>
+            <option value="cliente">cliente</option>
+        </select>
+    </div>
 
-{% endblock %}
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Agregar</button>
+  </form>
+
+  {% endblock %}
