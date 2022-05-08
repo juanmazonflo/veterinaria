@@ -393,7 +393,7 @@ def recetas(accion='',id=''):
             return redirect("/recetas")
 
 #Apartado Atención
-@app.route("/atención")
+@app.route("/atencion")
 @login_required
 def atencion():
     menus = ModelUser.extraermenu(current_user.tipo)
