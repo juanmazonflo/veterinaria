@@ -483,9 +483,9 @@ def informes(id=''):
     if request.method=='POST':
         accion=request.method['accion']
         if id=='diarias':
-            pdfkit.from_file('informes.html', 'micro.pdf')
+            return redirect("/informes")
         if id=='mensual':  
-            return redirect("/atencion")
+            return redirect("/informes")
 
 @app.route("/historial")
 @app.route("/historial/<id>")
