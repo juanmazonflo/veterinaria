@@ -22,6 +22,22 @@ class Mascotas():
             raise Exception(ex)
 
     @classmethod
+    def extraerlistamascotasCliente(self,db,id):
+        try:
+            listamascotas = []
+            cursor = db.connection.cursor()
+            sql = ("SELECT m.idmascota, u.nombre, m.tipo, m.nombre FROM mascotas m INNER JOIN usuarios u ON m.idusuario = u.idusuario INNER JOIN usuarios o ON m.idusuario={0}".format(id))
+            cursor.execute(sql)
+            row=cursor.fetchone()
+            while row != None:
+                    nuevamascota=Mascota(row[0],row[1],row[2],row[3])
+                    listamascotas.append(nuevamascota)
+                    row=cursor.fetchone()
+            return listamascotas
+        except Exception as ex:
+            raise Exception(ex)
+
+    @classmethod
     def agregarMascota(self,db,valores):
         try:
             cursor = db.connection.cursor()
@@ -58,3 +74,4 @@ class Mascotas():
             db.connection.commit()
         except Exception as ex:
             raise Exception(ex)
+

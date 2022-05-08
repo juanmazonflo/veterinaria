@@ -137,38 +137,37 @@ def citas(accion='',id=''):
     menus = Menu.extraermenu(current_user.tipo)
     citas=[]
     citas = Citas.extraerCitas(db)
+    idcliente=current_user.id
+    citas2= Citas.extraerCitasCliente(db,idcliente)
     cursor = db.connection.cursor() 
     cursor2 = db.connection.cursor() 
-    cursor.execute('SELECT nombre FROM mascotas')  
-    cursor2.execute('SELECT servicio FROM servicios')  
-    mascota = cursor.fetchall() 
-    servicio= cursor2.fetchall() 
-    if accion=='':
-        return render_template("citas.html",usermenu = menus,listacitas=citas)
+    cursor.execute('SELECT idmascota FROM mascotas')  
+    cursor2.execute('SELECT idservicio FROM servicios')  
+    mascotas = cursor.fetchall() 
+    servicios= cursor2.fetchall()
+    if accion=='': 
+        if current_user.tipo=='cliente':
+            return render_template("citas.html",usermenu = menus,listacitas=citas2)
+        else:
+            return render_template("citas.html",usermenu = menus,listacitas=citas)
     if accion=='agregar':   
         if request.method == 'GET':
-            return render_template("citas_agregar.html",usermenu = menus,listacitas = citas,mascota=mascota,servicio=servicio)
+            return render_template("citas_agregar.html",usermenu = menus,listacitas = citas,mascotas=mascotas,servicios=servicios)
         if request.method == 'POST':
-            mascota= request.form['mascota']
-            servicio = request.form['servicio']
+            idmasco= request.form['mascota']
+            idservi = request.form['servicio']
             fecha = request.form['fecha']
             hora = request.form['hora']
-            cursor2 = db.connection.cursor() 
-            cursor2.execute('SELECT idmascota FROM mascotas WHERE nombre="{0}"'.format(mascota))  
-            idmascota= cursor2.fetchall() 
-            cursor2.close()
-            cursor3 = db.connection.cursor() 
-            cursor3.execute('SELECT idservicio FROM servicios WHERE servicio="{0}"'.format(servicio))  
-            idservicio= cursor3.fetchall() 
-            cursor3.close()
-            valores=[idmascota,idservicio,fecha,hora]
+            #idmascota=Citas.cursorMascota(db,masco)
+            #idservicio=Citas.cursorMascota(db,servi)
+            valores=[idmasco,idservi,fecha,hora]
             Citas.agregarCita(db,valores)
             flash('Cita añadida satisfactoriamente')
-            return render_template("citas_agregar.html",usermenu = menus,listacitas = citas,mascota=mascota,servicio=servicio)
+            return render_template("citas_agregar.html",usermenu = menus,listacitas = citas,mascotas=mascotas,servicios=servicios)
     if accion=='modificar':
         if request.method == 'GET':
             data=Citas.extraerCita(db,id)
-            return render_template('citas_modificar.html',usermenu = menus,listacitas = citas, cita = data[0],mascota=mascota,servicio=servicio)
+            return render_template('citas_modificar.html',usermenu = menus,listacitas = citas, cita = data[0],mascotas=mascotas,servicios=servicios)
         if request.method == 'POST':
             mascota= request.form['mascota']
             servicio = request.form['servicio']
@@ -177,8 +176,8 @@ def citas(accion='',id=''):
             valores=[mascota,servicio,fecha,hora,id]
             Citas.actualizarCita(db,valores)
             data =  Citas.extraerCita(db,id)
-            flash('Mascota modificada satisfactoriamente')
-            return render_template("citas_modificar.html",usermenu = menus,listamascotas = citas, cita = data[0],mascota=mascota,servicio=servicio)
+            flash('Cita modificada satisfactoriamente')
+            return render_template("citas_modificar.html",usermenu = menus,listamascotas = citas, cita = data[0],mascota=mascotas,servicio=servicios)
     if accion=='eliminar':
             Citas.eliminarCita(db,id)
             flash('Cita eliminada satisfactoriamente')
@@ -192,13 +191,17 @@ def mascotas(accion='',id=''):
     menus = Menu.extraermenu(current_user.tipo)
     mascotas = []
     mascotas = Mascotas.extraerlistamascotas(db)
+    idcliente=current_user.id
+    mascotas2= Mascotas.extraerlistamascotasCliente(db,idcliente)
     cursor = db.connection.cursor() 
     cursor.execute('SELECT username FROM usuarios WHERE tipo="cliente"')  
     cliente= cursor.fetchall() 
-    if accion=='':
-        return render_template("mascotas.html",usermenu = menus,listamascotas = mascotas)
+    if accion=='': 
+        if current_user.tipo=='cliente':
+            return render_template("mascotas.html",usermenu = menus,listamascotas=mascotas2)
+        else:
+            return render_template("mascotas.html",usermenu = menus,listamascotas = mascotas)     
     if accion=='agregar':
-
         if request.method == 'GET':
             return render_template("mascotas_agregar.html",usermenu = menus,listamascotas = mascotas,cliente=cliente)
         if request.method == 'POST':

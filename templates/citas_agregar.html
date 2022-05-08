@@ -137,7 +137,7 @@
     <div class="form-floating">
         <p style="font-family:verdana">
             Escoge mascota:<SELECT class="form-control" name="mascota" style="font-family:verdana">
-            {% for j in mascota %}
+            {% for j in mascotas %}
                 <OPTION  value={{j[0]}}>{{j[0]}}</OPTION>
             {% endfor %}
             </SELECT>
@@ -146,7 +146,7 @@
     <div class="form-floating">
         <p style="font-family:verdana">
             Escoge servicio<SELECT class="form-control" name="servicio" style="font-family:verdana">
-            {% for j in servicio %}
+            {% for j in servicios %}
                 <OPTION  value={{j[0]}}>{{j[0]}}</OPTION>
             {% endfor %}
             </SELECT>

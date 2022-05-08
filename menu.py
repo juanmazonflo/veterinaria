@@ -15,7 +15,7 @@ class Menu():
                     usermenu = {"Home":"/home","Agendar una cita":"/citas", "Historiales":"/historial","Atencion":"/atencion","Agregar receta":"/recetas/agregar","Agendar una atencion":"/atencion/agregar","Mascotas":"/mascotas"}
                 else:
                     if tipo == "cliente":
-                        usermenu = {"Home":"/home","Agendar una cita":"/citas", "Historiales":"/historial","Mascotas":"/mascotas"},
+                        usermenu = {"Home":"/home","Agendar una cita":"/citas", "Historiales":"/historial","Mascotas":"/mascotas"}
             return usermenu
         except Exception as ex:
             raise Exception(ex)
